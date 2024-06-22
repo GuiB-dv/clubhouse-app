@@ -5,12 +5,23 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 const mongoose = require("mongoose")
-  
+const passport = require('passport')
+const session = require('express-session')
+const flash = require('express-flash')
+
+require('dotenv').config()
+require('./config/passportConfig')(passport)
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// mongo connection
+const mongoDb = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.h7dn8fe.mongodb.net/clubhouse?retryWrites=true&w=majority&appName=Cluster0`;
+mongoose.connect(mongoDb);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +32,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//passport
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+  }));
+  
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
