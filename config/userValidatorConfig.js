@@ -1,4 +1,5 @@
 const {body, validationResult} = require('express-validator')
+const Users = require('../models/userModel')
 
 exports.userSignup = [
     // validate fields
@@ -18,7 +19,7 @@ exports.userSignup = [
         .isLength({min: 3})
         .custom(
             async value => {
-            const existingUser = await Users.findOne(value);
+            const existingUser = await Users.findOne({username: value});
             if (existingUser) {
               throw new Error('Username already in use');
             }
@@ -51,9 +52,14 @@ exports.userSignup = [
 ]
 
 exports.errors = (req, res, next) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty) {
-        res.render('signup_form', {title: 'Sign up', errors: errors.array()})
+    const result = validationResult(req)
+    const errors = result.array()
+    console.log('----------- ' + errors.length + ' ----------')
+    
+    if (!errors.length){ 
+        return next() 
+    } else {
         console.log(errors)
+        res.render('signup_form', {title: 'Sign up'})  
     }
 }
