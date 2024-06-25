@@ -3,6 +3,7 @@ var router = express.Router();
 
 const userController = require('../controllers/userController')
 const messageController = require('../controllers/messageController')
+const validate = require('../config/userValidatorConfig')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -17,7 +18,7 @@ router.post('/signin', userController.signin_post)
 // GET sign-up
 router.get('/signup', userController.signup_get)
 // POST sign-up
-router.post('/signup', userController.signin_post)
+router.post('/signup', validate.userSignup, validate.errors, userController.signup_post)
 
 
 module.exports = router;

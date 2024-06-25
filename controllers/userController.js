@@ -21,37 +21,21 @@ exports.signup_get = asyncHandler(async (req, res, next) => {
     res.render('signup_form', {title: 'Sign up'})
 })
 
-exports.signup_post = [
-    // validate fields
-    body('first_name', 'this field is required')
-        .trim()
-        .isLength({min: 3})
-        .escape(),
-    body('last_name', 'this field is required')
-        .trim()
-        .isLength({min: 3})
-        .escape(),
-
-    asyncHandler(async (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty){
-            res.render('signup_form', {title: 'Sign up', errors: errors.array()})
-        } else {
-            try {
-                const hashedPassword = await bcrypt.hash(req.body.passwor, 10)
-                const user = new User ({
-                    first_name: req.body.first_name,
-                    last_name: req.body.last_name,
-                    username: req.body.username,
-                    password: hashedPassword,
-                    membership_status: req.body.membership_status,
-                })
-                const result = await user.save()
-                res.redirect('/signin')
-            } catch(err) {
-                return next(err)
-            }
+exports.signup_post = asyncHandler(async (req, res, next) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+            const user = new User ({
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                username: req.body.username,
+                password: hashedPassword,
+                membership_status: req.body.membership_status,
+            })
+            const result = await user.save()
+            console.log(user)
+            res.redirect('/signin')
+        } catch(err) {
+            return next(err)
         }
-        
-    })
-]
+    }
+)
