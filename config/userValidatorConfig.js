@@ -1,8 +1,8 @@
 const {body, validationResult} = require('express-validator')
 const Users = require('../models/userModel')
+const asyncHandler = require('express-async-handler')
 
 exports.userSignup = [
-    // validate fields
     body('first_name', 'this field is required')
         .trim()
         .notEmpty()
@@ -51,7 +51,7 @@ exports.userSignup = [
         })  
 ]
 
-exports.errors = (req, res, next) => {
+exports.errors = asyncHandler(async(req, res, next) => {
     const result = validationResult(req)
     const errors = result.array()
     console.log('----------- ' + errors.length + ' ----------')
@@ -60,6 +60,16 @@ exports.errors = (req, res, next) => {
         return next() 
     } else {
         console.log(errors)
-        res.render('signup_form', {title: 'Sign up'})  
+        res.render('signup_form', {
+            title: 'Sign up',
+            errors: errors,
+        })  
     }
-}
+})
+
+exports.checkLogin = asyncHandler(async(req, res, next) => {
+    if (req.isAuthenticated()){
+        return next()
+    } 
+    res.redirect('/signin')
+})
