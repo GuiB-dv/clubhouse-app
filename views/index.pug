@@ -1,7 +1,16 @@
-extends layout
+extends layout02
 
 block content
   h1= title
   p Welcome to the #{title}
   
   hr
+  //- if msg.length
+  //-   ul
+  //-     each message in msg
+  //-       li
+  //-         a(href=message.url) #{msg.title}
+  //-         |  (#{msg.message})
+
+  //- else
+  //-   p There are no books.

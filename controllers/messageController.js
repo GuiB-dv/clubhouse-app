@@ -3,6 +3,17 @@ const asyncHandler = require('express-async-handler')
 const {DateTime} = require('luxon')
 const { findById } = require('../models/userModel')
 
+exports.display_messages = asyncHandler(async(req, res, next) => {
+    const allMessages = await Message.find().sort({timestamp: -1}).exec()
+    if(!allMessages) {
+        res.render ('index', {
+            msg: allMessages
+        })
+        console.log(msg)
+    }
+    res.render('index', {title: 'Clubhouse'})
+})
+
 
 exports.new_message_get = asyncHandler(async(req, res, next) => {
     res.render('message_form', {title: 'New message'})
