@@ -6,7 +6,9 @@ const UserSchema = new Schema ({
     last_name: { type: String, required: true },
     username: { type: String, required: true },
     password: { type: String, required: true },
-    membership_status: { type: Boolean, default: false },
+    membership_status: { type: String, default: 'basic' },
 })
+
+UserSchema.virtual("url").get(function () { return `/user/${this._id}`; });
 
 module.exports = mongoose.model("User", UserSchema)

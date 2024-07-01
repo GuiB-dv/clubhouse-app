@@ -6,7 +6,7 @@ const messageController = require('../controllers/messageController')
 const validate = require('../config/userValidatorConfig')
 
 /* GET home page. */
-router.get('/',validate.checkLogin, messageController.display_messages)
+router.get('/', validate.checkLogin, messageController.display_messages)
 
 // ----- ROUTES ------
 
@@ -28,6 +28,8 @@ router.get('/signout', validate.checkLogin, userController.signout_get)
 router.get('/message/new', validate.checkLogin, messageController.new_message_get)
 // POST new message
 router.post('/message/new', validate.checkLogin, messageController.new_message_post)
+// GET message details
+router.get('/message/:id', validate.checkLogin, messageController.message_detail)
 // GET edit message
 router.get('/message/:id/edit', validate.checkLogin, messageController.edit_message_get)
 // POST edit

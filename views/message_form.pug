@@ -6,7 +6,7 @@ block content
   form(method='POST')
     .form-group
       label(for='title') Title: 
-      input#title.form-control(type='text' placeholder='Title' name='title'  required value=(undefined===message ? '' : message.title))
+      input#title.form-control(type='text' placeholder='Title' name='title' value=(undefined===message ? '' : message.title))
     .form-group
       label(for='message') Write your message:
       input#message.form-control(type='text' placeholder='write here!' name='message'  required value=(undefined===message ? '' : message.message))

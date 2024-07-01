@@ -2,6 +2,7 @@ const {body, validationResult} = require('express-validator')
 const Users = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
 
+// validate user sign up form
 exports.userSignup = [
     body('first_name', 'this field is required')
         .trim()
@@ -80,4 +81,10 @@ exports.checkNotLogin = asyncHandler(async(req, res, next) => {
         res.redirect('/')
     } 
     next()
+})
+
+exports.checkRole = asyncHandler(async(req, res, next) => {
+    if (req.user.membership_status === 'admin'){
+        return next()
+    }
 })
