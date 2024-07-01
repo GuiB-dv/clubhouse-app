@@ -44,18 +44,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// logged user data
-// app.get('/api/user_data', function(req, res) {
-//   if (req.user === undefined) {
-//       // The user is not logged in
-//       res.json({});
-//   } else {
-//       res.json({
-//           user: req.user
-//       })
-//   }
-// });
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

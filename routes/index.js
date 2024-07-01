@@ -12,15 +12,16 @@ router.get('/',validate.checkLogin, messageController.display_messages)
 
 // ----- USER -----
 // GET sign-in
-router.get('/signin', userController.signin_get)
+router.get('/signin', validate.checkNotLogin, userController.signin_get)
 // POST sign-in
-router.post('/signin', userController.signin_post)
+router.post('/signin', validate.checkNotLogin, userController.signin_post)
 // GET sign-up
-router.get('/signup', userController.signup_get)
+router.get('/signup', validate.checkNotLogin, userController.signup_get)
 // POST sign-up
-router.post('/signup', validate.userSignup, validate.errors, userController.signup_post)
+router.post('/signup', validate.checkNotLogin, validate.userSignup, validate.errors, userController.signup_post)
 // GET sign-out
-//router.get('/signout')
+router.get('/signout', validate.checkLogin, userController.signout_get)
+
 
 // ----- MESSAGE -----
 // GET new message

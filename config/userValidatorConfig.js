@@ -73,3 +73,11 @@ exports.checkLogin = asyncHandler(async(req, res, next) => {
     } 
     res.redirect('/signin')
 })
+
+// Checks if the user is authenticated, if its not authenticated we proceed
+exports.checkNotLogin = asyncHandler(async(req, res, next) => {
+    if (req.isAuthenticated()){
+        res.redirect('/')
+    } 
+    next()
+})

@@ -38,3 +38,13 @@ exports.signup_post = asyncHandler(async (req, res, next) => {
         }
     }
 )
+
+exports.signout_get = asyncHandler(async (req, res, next) => {
+	res.clearCookie('connect.sid') // clear the session cookie
+	req.logout(function(err) { // passport logout 
+		console.log(err)
+		req.session.destroy(function (err) { // destroys the session
+			res.redirect('/')
+		})
+	})
+})
