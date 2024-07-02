@@ -48,3 +48,15 @@ exports.signout_get = asyncHandler(async (req, res, next) => {
 		})
 	})
 })
+
+exports.membership_get = asyncHandler(async (req, res, next) => {
+    const user = req.user
+    res.render('membership_form', {
+        title: 'Become a member!',
+        user: user
+    })
+})
+
+exports.membership_post = asyncHandler(async (req, res, next) => {
+    res.render('membership_form')
+})

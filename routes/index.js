@@ -21,6 +21,10 @@ router.get('/signup', validate.checkNotLogin, userController.signup_get)
 router.post('/signup', validate.checkNotLogin, validate.userSignup, validate.errors, userController.signup_post)
 // GET sign-out
 router.get('/signout', validate.checkLogin, userController.signout_get)
+// GET membership
+router.get('/membership', userController.membership_get)
+// POST membership
+router.post('/membership', userController.membership_post)
 
 
 // ----- MESSAGE -----

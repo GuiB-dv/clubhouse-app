@@ -4,7 +4,7 @@ const {DateTime} = require('luxon')
 const { findById } = require('../models/userModel')
 
 exports.display_messages = asyncHandler(async(req, res, next) => {
-    const allMessages = await Message.find().sort({timestamp: -1}).exec()
+    const allMessages = await Message.find().populate('author').sort({timestamp: -1}).exec()
     const user = req.user;
     if(allMessages) {
         res.render ('index', {

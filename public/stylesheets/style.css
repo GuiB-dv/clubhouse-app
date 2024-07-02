@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+ul {
+  list-style-type: none; /* Remove bullets from the list */
+  padding: 0; /* Optional: Remove default padding */
+}
+li {
+  margin-bottom: 1em;
+}
