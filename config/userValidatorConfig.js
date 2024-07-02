@@ -84,7 +84,11 @@ exports.checkNotLogin = asyncHandler(async(req, res, next) => {
 })
 
 exports.checkRole = asyncHandler(async(req, res, next) => {
-    if (req.user.membership_status === 'admin'){
+    if (req.user.membership_status === true){
         return next()
+    } else {
+     res.redirect('/', {
+        message: 'You need to be a member to access this information'
+     })   
     }
 })

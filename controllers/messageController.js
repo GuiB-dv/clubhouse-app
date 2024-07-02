@@ -5,10 +5,12 @@ const { findById } = require('../models/userModel')
 
 exports.display_messages = asyncHandler(async(req, res, next) => {
     const allMessages = await Message.find().sort({timestamp: -1}).exec()
+    const user = req.user;
     if(allMessages) {
         res.render ('index', {
             title: 'Messages',
-            msg: allMessages
+            msg: allMessages,
+            user: user
         })
         console.log(allMessages)
     } else {
@@ -22,19 +24,22 @@ exports.message_detail = asyncHandler(async(req, res, next) => {
     const message = await Message.findById(req.params.id)
         .populate("author")
         .exec()
+    const user = req.user;    
     if (message === null) {
-        const err = new Error("Book copy not found");
+        const err = new Error("Message not found");
         err.status = 404;
         return next(err);
     }
     res.render("message_detail", {
         title: "Message",
         message: message,
+        user: user
     })
 })
 
 exports.new_message_get = asyncHandler(async(req, res, next) => {
-    res.render('message_form', {title: 'New message'})
+    const user = req.user
+    res.render('message_form', {title: 'New message', user: user})
 })
 
 exports.new_message_post = asyncHandler(async(req, res, next) => {

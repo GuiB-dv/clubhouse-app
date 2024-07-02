@@ -1,4 +1,4 @@
-extends layout02
+extends layout
 
 block content
   h1= title
@@ -11,7 +11,7 @@ block content
           dt
             | #{message.title}
           dd  #{message.message} 
-            a(href=message.url) see more details
+            a(href=message.url) details
 
   else
     p There are no messages.
