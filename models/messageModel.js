@@ -12,5 +12,8 @@ const MessageSchema = new Schema ({
 // We don't use an arrow function as we'll need the this object
 MessageSchema.virtual("url").get(function () { return `/message/${this._id}`; });
 
+// time format with luxon
+
+
 
 module.exports = mongoose.model("Message", MessageSchema)

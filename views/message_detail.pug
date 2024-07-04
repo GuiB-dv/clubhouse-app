@@ -3,4 +3,7 @@ extends layout
 block content
 
   h1 #{message.title}
+  if user.membership_status 
+    i #{message.author.username} 
+    i #{message.timestamp}
   p #{message.message}
