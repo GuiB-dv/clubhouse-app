@@ -3,3 +3,8 @@ extends layout
 block content 
 
   h1= title
+  form(method='POST')
+    .form-group
+      label(for='secret_password') Secret password:
+      input#title.form-control(type='password' placeholder='password' name='secret_password' autocomplete='off')
+    button.btn.btn-primary(type='submit') Submit

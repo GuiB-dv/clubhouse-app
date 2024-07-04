@@ -58,5 +58,21 @@ exports.membership_get = asyncHandler(async (req, res, next) => {
 })
 
 exports.membership_post = asyncHandler(async (req, res, next) => {
-    res.render('membership_form')
+    const user = req.user
+    if (req.body.secret_password.toLowerCase() === 'letmeinplease') {
+        try {
+            req.user.membership_status = true
+            await req.user.save()
+            res.redirect('/')
+        } catch {
+            console.log(err)
+            res.status(500).send("Error changing membership status!");
+        }
+    } else {
+        res.render('membership_form', {
+            title: 'Become a member',
+            failureFlash: true,
+            user: user
+        })
+    }
 })

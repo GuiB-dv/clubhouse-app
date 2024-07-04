@@ -83,8 +83,9 @@ exports.checkNotLogin = asyncHandler(async(req, res, next) => {
     next()
 })
 
-exports.checkRole = asyncHandler(async(req, res, next) => {
-    if (req.user.membership_status === true){
+// Check role if member, it PROCEEDS
+exports.checkRoleMember = asyncHandler(async(req, res, next) => {
+    if (req.user.membership_status){
         return next()
     } else {
      res.redirect('/', {
@@ -92,3 +93,14 @@ exports.checkRole = asyncHandler(async(req, res, next) => {
      })   
     }
 })
+
+// Check role if member, it DOESNT PROCEED
+exports.checkRoleNotMember = asyncHandler(async(req, res, next) => {
+    if (!req.user.membership_status){
+        return next()
+    } else {
+     res.redirect('/')   
+    }
+})
+
+// MEMBERSHIP PASSWORD FORM VALIDATION

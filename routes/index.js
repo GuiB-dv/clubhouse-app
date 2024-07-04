@@ -22,9 +22,9 @@ router.post('/signup', validate.checkNotLogin, validate.userSignup, validate.err
 // GET sign-out
 router.get('/signout', validate.checkLogin, userController.signout_get)
 // GET membership
-router.get('/membership', userController.membership_get)
+router.get('/membership', validate.checkRoleNotMember, validate.checkLogin, userController.membership_get)
 // POST membership
-router.post('/membership', userController.membership_post)
+router.post('/membership', validate.checkRoleNotMember, validate.checkLogin, userController.membership_post)
 
 
 // ----- MESSAGE -----
