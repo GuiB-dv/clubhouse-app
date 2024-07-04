@@ -7,4 +7,7 @@ block content
     .form-group
       label(for='secret_password') Secret password:
       input#title.form-control(type='password' placeholder='password' name='secret_password' autocomplete='off')
+    if wrong_password
+      .alert.alert-danger
+        p= wrong_password
     button.btn.btn-primary(type='submit') Submit

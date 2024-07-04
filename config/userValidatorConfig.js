@@ -4,20 +4,26 @@ const asyncHandler = require('express-async-handler')
 
 // validate user sign up form
 exports.userSignup = [
-    body('first_name', 'this field is required')
+    body('first_name')
         .trim()
         .notEmpty()
+        .withMessage('First name field is required')
         .isLength({min: 3})
+        .withMessage('First name field needs to be more than 3 characters')
         .escape(),
-    body('last_name', 'this field is required')
+    body('last_name')
         .trim()
         .notEmpty()
+        .withMessage('Last name field is required')
         .isLength({min: 3})
+        .withMessage('Last name field needs to be more than 3 characters')
         .escape(),
     body('username', 'this field is required')
         .trim()
         .notEmpty()
+        .withMessage('Username name field is required')
         .isLength({min: 3})
+        .withMessage('Username field needs to be more than 3 characters')
         .custom(
             async value => {
             const existingUser = await Users.findOne({username: value});
@@ -41,15 +47,16 @@ exports.userSignup = [
             pointsForContainingNumber: 10,
             pointsForContainingSymbol: 10,
           }),
-    body('confirm_password', 'this field is required')
+    body('confirm_password')
         .trim()
         .notEmpty()
+        .withMessage('Confirm Password field is required')
         .custom((value, {req}) => {
             if(value !== req.body.password){
                 throw new Error('Both password must be the same')
             }
             return true;
-        })  
+        }) 
 ]
 
 exports.errors = asyncHandler(async(req, res, next) => {
@@ -63,6 +70,7 @@ exports.errors = asyncHandler(async(req, res, next) => {
         console.log(errors)
         res.render('signup_form', {
             title: 'Sign up',
+            user: req.user,
             errors: errors,
         })  
     }
@@ -102,5 +110,3 @@ exports.checkRoleNotMember = asyncHandler(async(req, res, next) => {
      res.redirect('/')   
     }
 })
-
-// MEMBERSHIP PASSWORD FORM VALIDATION

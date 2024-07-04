@@ -3,45 +3,46 @@ var router = express.Router();
 
 const userController = require('../controllers/userController')
 const messageController = require('../controllers/messageController')
-const validate = require('../config/userValidatorConfig')
+const {checkLogin, checkNotLogin, checkRoleMember, checkRoleNotMember} = require('../config/userValidatorConfig')
+
 
 /* GET home page. */
-router.get('/', validate.checkLogin, messageController.display_messages)
+router.get('/', checkLogin, messageController.display_messages)
 
 // ----- ROUTES ------
 
 // ----- USER -----
 // GET sign-in
-router.get('/signin', validate.checkNotLogin, userController.signin_get)
+router.get('/signin', checkNotLogin, userController.signin_get)
 // POST sign-in
-router.post('/signin', validate.checkNotLogin, userController.signin_post)
+router.post('/signin', checkNotLogin, userController.signin_post)
 // GET sign-up
-router.get('/signup', validate.checkNotLogin, userController.signup_get)
+router.get('/signup', checkNotLogin, userController.signup_get)
 // POST sign-up
-router.post('/signup', validate.checkNotLogin, validate.userSignup, validate.errors, userController.signup_post)
+router.post('/signup', checkNotLogin, userController.signup_post)
 // GET sign-out
-router.get('/signout', validate.checkLogin, userController.signout_get)
+router.get('/signout', checkLogin, userController.signout_get)
 // GET membership
-router.get('/membership', validate.checkRoleNotMember, validate.checkLogin, userController.membership_get)
+router.get('/membership', checkRoleNotMember, checkLogin, userController.membership_get)
 // POST membership
-router.post('/membership', validate.checkRoleNotMember, validate.checkLogin, userController.membership_post)
+router.post('/membership', checkRoleNotMember, checkLogin, userController.membership_post)
 
 
 // ----- MESSAGE -----
 // GET new message
-router.get('/message/new', validate.checkLogin, messageController.new_message_get)
+router.get('/message/new', checkLogin, messageController.new_message_get)
 // POST new message
-router.post('/message/new', validate.checkLogin, messageController.new_message_post)
+router.post('/message/new', checkLogin, messageController.new_message_post)
 // GET message details
-router.get('/message/:id', validate.checkLogin, messageController.message_detail)
+router.get('/message/:id', checkLogin, messageController.message_detail)
 // GET edit message
-router.get('/message/:id/edit', validate.checkLogin, messageController.edit_message_get)
+router.get('/message/:id/edit', checkLogin, messageController.edit_message_get)
 // POST edit
-router.post('/message/:id/edit', validate.checkLogin, messageController.edit_message_post)
+router.post('/message/:id/edit', checkLogin, messageController.edit_message_post)
 // GET delete message
-router.get('/message/:id/delete', validate.checkLogin, messageController.delete_message_get)
+router.get('/message/:id/delete', checkLogin, messageController.delete_message_get)
 // POST delete message
-router.post('/message/:id/delete', validate.checkLogin, messageController.delete_message_post)
+router.post('/message/:id/delete', checkLogin, messageController.delete_message_post)
 
 
 module.exports = router;

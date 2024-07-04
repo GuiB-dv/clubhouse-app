@@ -24,4 +24,9 @@ block content
     .form-group
       label(for='confirm_password') Confirm your password: 
       input#confirm_password.form-control(type='password' placeholder='confirm your password' name='confirm_password')
+    if errors && errors.length
+      .alert.alert-danger
+        ul
+          each error in errors
+            li= error.msg
     button.btn.btn-primary(type='submit') Submit

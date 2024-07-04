@@ -2,8 +2,6 @@ extends layout
 
 block content
   h1= title
-  if messages.error
-    p= messages.error
   form(method='POST')
     .form-group
       label(for='username') Username: 
@@ -11,4 +9,7 @@ block content
     .form-group
       label(for='password') Password: 
       input#password.form-control(type='password' placeholder='password' name='password')
+    if messages.error
+      .alert.alert-danger
+        p= messages.error
     button.btn.btn-primary(type='submit') Sign-in

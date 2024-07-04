@@ -13,8 +13,9 @@ block content
             | #{message.message} 
           a(href=message.url) details 
           if user.membership_status
-            i #{message.author.username} 
-            i #{message.timestamp}
+            b
+              i #{message.author.username} 
+            i #{message.timestamp_formatted}
           hr
 
   else

@@ -4,6 +4,7 @@ block content
 
   h1 #{message.title}
   if user.membership_status 
-    i #{message.author.username} 
-    i #{message.timestamp}
+    b
+      i #{message.author.username} 
+    i #{message.timestamp_formatted}
   p #{message.message}
