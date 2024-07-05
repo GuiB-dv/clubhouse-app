@@ -11,7 +11,7 @@ router.get('/', checkLogin, messageController.display_messages)
 
 // ----- ROUTES ------
 
-// ----- USER -----
+//  USER 
 // GET sign-in
 router.get('/signin', checkNotLogin, userController.signin_get)
 // POST sign-in
@@ -26,9 +26,12 @@ router.get('/signout', checkLogin, userController.signout_get)
 router.get('/membership', checkRoleNotMember, checkLogin, userController.membership_get)
 // POST membership
 router.post('/membership', checkRoleNotMember, checkLogin, userController.membership_post)
+// GET become admin
+router.get('/becomeadmin', checkRoleMember, checkLogin, userController.become_admin_get)
+// POST become admin
+router.post('/becomeadmin', checkRoleMember, checkLogin, userController.become_admin_post)
 
-
-// ----- MESSAGE -----
+//  MESSAGE 
 // GET new message
 router.get('/message/new', checkLogin, messageController.new_message_get)
 // POST new message

@@ -65,17 +65,17 @@ exports.new_message_post = [
 ]
 
 exports.edit_message_get = asyncHandler(async(req, res, next) => {
-    res.render('message_form', {title: 'Edit message', message:'NOT IMPLEMENTED'})
+    res.render('message_form', {title: 'Edit message NOT IMPLEMENTED'})
 })
 
 exports.edit_message_post = asyncHandler(async(req, res, next) => {
-    res.render('message_form', {title: 'Edit message', message:'NOT IMPLEMENTED'})
+    res.render('message_form', {title: 'Edit message NOT IMPLEMENTED'})
 })
 
 exports.delete_message_get = asyncHandler(async(req, res, next) => {
-    res.render('message_details', {title: 'Delete message', message:'NOT IMPLEMENTED'})
+    res.render('message_details', {title: 'Delete message NOT IMPLEMENTED'})
 })
 
 exports.delete_message_post = asyncHandler(async(req, res, next) => {
-    res.render('message_details', {title: 'Delete message', message:'NOT IMPLEMENTED'})
+    res.render('message_details', {title: 'Delete message NOT IMPLEMENTED'})
 })

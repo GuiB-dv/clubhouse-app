@@ -73,7 +73,33 @@ exports.membership_post = asyncHandler(async (req, res, next) => {
         }
     } else {
         res.render('membership_form', {
-            title: 'Become a member',
+            title: 'Become a member!',
+            wrong_password: 'Wrong password, try again!',
+            user: req.user
+        })
+    }
+})
+
+exports.become_admin_get = asyncHandler(async (req, res, next) => {
+    res.render('admin_form', {
+        title: 'Become an admin!',
+        user: req.user
+    })
+})
+
+exports.become_admin_post = asyncHandler(async (req, res, next) => {
+    if (req.body.secret_password.toLowerCase() === 'iwantmod') {
+        try {
+            req.user.admin = true
+            await req.user.save()
+            res.redirect('/')
+        } catch {
+            console.log(err)
+            res.status(500).send("Error changing admin status!");
+        }
+    } else {
+        res.render('admin_form', {
+            title: 'Become an admin!',
             wrong_password: 'Wrong password, try again!',
             user: req.user
         })
