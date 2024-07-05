@@ -9,7 +9,7 @@ exports.display_messages = asyncHandler(async(req, res, next) => {
     const user = req.user;
     if(allMessages) {
         res.render ('index', {
-            title: 'Messages',
+            title: 'Welcome',
             msg: allMessages,
             user: user
         })
