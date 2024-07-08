@@ -40,12 +40,10 @@ router.post('/message/new', checkLogin, messageController.new_message_post)
 router.get('/message/:id', checkLogin, messageController.message_detail)
 // GET edit message
 router.get('/message/:id/edit', checkLogin, messageController.edit_message_get)
-// POST edit
+// POST edit message
 router.post('/message/:id/edit', checkLogin, messageController.edit_message_post)
-// GET delete message
-router.get('/message/:id/delete', checkLogin, messageController.delete_message_get)
 // POST delete message
-router.post('/message/:id/delete', checkLogin, messageController.delete_message_post)
+router.post('/message/:id', checkLogin, messageController.delete_message_post)
 
 
 module.exports = router;

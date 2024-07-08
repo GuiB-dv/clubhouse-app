@@ -36,8 +36,7 @@ exports.message_detail = asyncHandler(async(req, res, next) => {
 })
 
 exports.new_message_get = asyncHandler(async(req, res, next) => {
-    const user = req.user
-    res.render('message_form', {title: 'New message', user: user})
+    res.render('message_form', {title: 'New message', user: req.user})
 })
 
 exports.new_message_post = [
@@ -62,16 +61,26 @@ exports.new_message_post = [
 ]
 
 exports.edit_message_get = asyncHandler(async(req, res, next) => {
-    res.render('message_form', {title: 'Edit message NOT IMPLEMENTED'})
+    const message = await Message.findById(req.params.id).populate('author').exec()
+    res.render('message_form', {
+        title: 'Edit message',
+        message: message,
+        user: req.user
+    })
 })
 
-exports.edit_message_post = asyncHandler(async(req, res, next) => {
-    res.render('message_form', {title: 'Edit message NOT IMPLEMENTED'})
-})
-
-exports.delete_message_get = asyncHandler(async(req, res, next) => {
-    res.render('message_details', {title: 'Delete message NOT IMPLEMENTED'})
-})
+exports.edit_message_post = [
+    validateMessage.messageValidator,
+    validateMessage.edit_errors,
+    asyncHandler(async(req, res, next) => {
+        const updatedData = {
+            title: req.body.title,
+            message: req.body.message
+        }
+        const updatedMessage = await Message.findByIdAndUpdate(req.params.id, updatedData, {new: true})
+        res.redirect(`/message/${updatedMessage._id}`);
+    })
+]
 
 exports.delete_message_post = asyncHandler(async(req, res, next) => {
     try {
