@@ -8,6 +8,9 @@ const mongoose = require("mongoose")
 const passport = require('passport')
 const session = require('express-session')
 const flash = require('express-flash')
+const compression = require('compression')
+const helmet = require('helmet')
+const RateLimit = require('express-rate-limit')
 
 require('dotenv').config()
 require('./config/passportConfig')(passport)
@@ -16,6 +19,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// Rate Limiter setup
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
 
 // mongo connection
 const mongoDb = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.h7dn8fe.mongodb.net/clubhouse?retryWrites=true&w=majority&appName=Cluster0`;
@@ -32,6 +41,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression())
+app.use(limiter)
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  }),
+)
+
 
 //passport
 app.use(session({
