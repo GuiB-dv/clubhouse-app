@@ -11,6 +11,7 @@ const flash = require('express-flash')
 const compression = require('compression')
 const helmet = require('helmet')
 const RateLimit = require('express-rate-limit')
+const cookieSession = require('cookie-session')
 
 require('dotenv').config()
 require('dotenv-vault').config()
@@ -41,6 +42,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cookieSession())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression())
 app.use(limiter)
