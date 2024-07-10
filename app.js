@@ -13,6 +13,7 @@ const helmet = require('helmet')
 const RateLimit = require('express-rate-limit')
 
 require('dotenv').config()
+require('dotenv-vault').config()
 require('./config/passportConfig')(passport)
 
 var indexRouter = require('./routes/index');
